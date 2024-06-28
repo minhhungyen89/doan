@@ -195,7 +195,7 @@
                                         body: json ,})
                                     .then(response1 => response1.text())
                                     .then(response1 => {if (response1.trim() == 'Success'){
-                                        document.querySelector('#notice_text').innerHTML= 'Tham gia nhóm thành công!';}
+                                        document.querySelector('#notice_text').innerHTML= 'Tham gia nhóm thành công!';}         
                                     else{ 
                                         document.querySelector('#notice_text').innerHTML= 'Tham gia nhóm thất bại';}})
                                 }else{
@@ -203,6 +203,9 @@
                                 })}
                         }else{document.querySelector('#submit_join').disabled = true;}})
                     }});});
+                // modal thông báo tắt 
+                document.getElementById('notice').addEventListener('hidden.bs.modal', function () {
+                    location.reload();});
                 // Kiểm tra tên nhóm có trống hay không 
                 document.querySelector('#ten_nhom').addEventListener('keyup', function() {
                     var ten_nhom = document.querySelector('#ten_nhom').value;

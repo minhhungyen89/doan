@@ -85,11 +85,10 @@
     color: black;}
 #boxInput{
     position:fixed;
-    bottom:10px;
+    bottom:20px;
     left:345px;
     height:40px;
-    display:none;
-}
+    display:none;}
 </style>
 </head>
 <body id='body'> 
@@ -111,7 +110,7 @@ echo '<input type="hidden" id="chuc_vu" value="'.$chuc_vu.'"/>';
                 <?php   echo "<img style='height:100px;' class='rounded ' src='avatar/group/".$avatar."' alt='avatar group'>"; ?>
             </div>
             <div class="p-2 mt-3 select" data-select="home"> Trang chủ </div>
-            <div class="p-2 select" data-select="post" > Bài đăng </div>
+            <div class="p-2 select" data-select="post" id="post"> Bài đăng </div>
             <div class="p-2 select" data-select="call"> Cuộc họp </div>
             <div class="p-2"> Bài tập </div>
             <div class="p-2"> Điểm </div>
@@ -119,11 +118,11 @@ echo '<input type="hidden" id="chuc_vu" value="'.$chuc_vu.'"/>';
             <div id="demo" data-select="personGroup" class="collapse p-2 select">
                 Thành viên nhóm
             </div>
-            <div id="demo" class="collapse p-2">
+            <div id="demo" data-select="leaveGroup" class="collapse p-2 select">
                 Rời khỏi nhóm
             </div>
-            <div id="demo" class="collapse p-2">
-                Giải tán nhóm
+            <div id="demo" data-select="dispersionGroup" class="collapse p-2 select">
+                Quản lý nhóm
             </div>
         </div>
         <div class="col-sm-9 flex-column-reverse bg-light" style="border-left:1px solid grey;">
@@ -145,13 +144,23 @@ echo '<input type="hidden" id="chuc_vu" value="'.$chuc_vu.'"/>';
             <button type="button" class="btn btn-primary" id="writePost">
             <i class="bi bi-pencil-square"></i> Cuộc hội thoại mới </button>
         </div>
-        <div class="flex-row" id="boxInput">
-            <div class="p-1" style="margin-right:10px;"><i class="bi bi-plus-circle" style="font-size:130%;"></i></div>
-            <div class="p-1" style="margin-right:10px;"><i class="bi bi-image" style="font-size:130%;"></i></div>
-            <div class="p-1" style="margin-right:10px;"><i class= 'bi bi-file-earmark-plus' style="font-size:130%;"> </i></div>
-            <textarea id="inputBox" placeholder="Aa" class="form-control"></textarea>
-                <i class="bi bi-emoji-smile p-2" style="font-size:120%;position:relative;left:-40px"></i>
-                <i class="bi bi-send p-2" style="font-size:120%;position:relative;left:-30px"></i>
+        <div id="boxInput">
+            <div class="d-flex flex-column">
+                <div  style='height= 60px;margin-left:119px;margin-right:36px;margin-top:-70px;'><ul class="list-inline d-flex flex-row" id="imagePreview" ></ul></div>
+                <!-- <div class="p-2 bg-warning"><ul class="list-inline d-flex flex-row" id="fileInfo">
+                </ul></div> -->
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="list-inline d-flex flex-row">
+                        <div class="p-1" style="margin-right:10px;"><i class="bi bi-plus-circle" style="font-size:130%;"></i></div>
+                        <div class="p-1" style="margin-right:10px;"><i class="bi bi-image" style="font-size:130%;"></i></div>
+                        <input type='hidden' value="<?php echo $groupId;?>" name="groupId"/>
+                        <input type="file" name="file"  id="uploadImages" accept="image/*,.gif" multiple onchange="handleFileSelect(event, 'image')" style="display:none;">
+                        <div class="p-1" style="margin-right:10px;"><i class= 'bi bi-file-earmark-plus' style="font-size:130%;"> </i></div>
+                        <input type="file" id="uploadFiles" accept=".doc,.docx,.pdf,.xls,.xlsx,.ppt,.pptx" multiple onchange="handleFileSelect(event, 'file')" style="display:none;">
+                        <textarea id="inputBox" name="inputBox" placeholder="Aa" class="form-control" style="position:relative;top:0px;left:0px;"></textarea>
+                        <button type="submit" style="border:none;background:none;"><i class="bi bi-send p-2" style="font-size:120%;"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -292,7 +301,7 @@ function doneTyping() {
                             e.addEventListener('click', function() {
                                 var idPerson = e.dataset.idPerson;
                                 listPerson.splice(listPerson.indexOf(idPerson), 1);
-                                // Xóa phần tử li chưa nút x
+                                // Xóa phần tử li chứa nút x
                                 this.parentElement.remove();})})
                         }else{
                             document.querySelector('#selectPerson').style.display = 'none';
@@ -329,65 +338,129 @@ document.querySelector("#addPerson").addEventListener('click', function () {
 document.querySelectorAll('.select').forEach(function(e){
     e.onclick = function(){
         var address = e.dataset.select;
-        // document.querySelector('#showGroup').style.display = 'block';
+        document.querySelector('#showGroup').style.display = 'block';
         document.querySelector('#footer').style.display = 'none'; 
         document.querySelector('#boxInput').style.display = 'none'; 
         e.style.backgroundColor = 'lightgrey';
-        const addresses = ['home', 'post', 'call','personGroup'];
+        const addresses = ['home', 'post', 'call','personGroup', 'dispersionGroup', 'leaveGroup'];
         for (let i = 0; i < addresses.length; i++) {
         if (address !== addresses[i]) {
             document.querySelector(`[data-select="${addresses[i]}"]`).style.backgroundColor = '#f1efef';}}
         if(address == "post"){
             document.querySelector('#footer').style.display = 'block';
-            // document.querySelector('#showGroup').style.display = 'flex';
-            // document.querySelector('#showGroup').classList.add("flex-column-reverse");
-               // Cuộn thanh scroll 
-        var myContainer = document.getElementById('showGroup');
-        myContainer.addEventListener('scroll', function() {
-           if (myContainer.scrollTop === 0) {
-            var time = document.getElementById('post2').innerText;
-            console.log(time);
-            fetch(`${address}.php?groupId=${groupId}&time=${time}`).then(response => response.text())
-            .then(response => { 
-                var newDiv = document.createElement('div');
-                // parentDiv.classList.add("d-flex");
-                newDiv.innerHTML = 'm';
-                var currentDiv = document.getElementById('showGroup');
-                currentDiv.insertBefore(newDiv, currentDiv.firstChild);})
-           }})
-        } 
+            document.querySelector('#showGroup').style.display = 'flex';
+            document.querySelector('#showGroup').classList.add("flex-column-reverse");} 
+        if(address == "leaveGroup"){
+            swal({
+                title: "Bạn có muốn rời khỏi nhóm ?",
+                text: "Chú ý, mọi thông tin của bạn với nhóm đều sẽ bị xóa !",
+                icon: "info",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    fetch(`${address}.php?groupId=`+groupId).then(response => response.text())
+                    .then(response => { 
+                        if(response == "Thành công"){
+                            swal("Bạn đã rời khỏi nhóm thành công !","","success",); location.reload();
+                        }else{ swal("Bạn không thể rời khỏi nhóm !","Nếu bạn muốn rời khỏi nhóm, vui lòng thêm quản trị viên !","error",);}
+                       })
+                }});
+            return;}
+            if(address == "dispersionGroup"){
+                const chuc_vu = document.querySelector('#chuc_vu').value;
+                if(chuc_vu == 0){
+                    var myModal = new bootstrap.Modal(document.getElementById('notice'), {
+                    keyboard: false});
+                    myModal.show();
+                document.querySelector('#notice_text').innerHTML = 'Bạn không thể thực hiện chức năng này ! ';
+                return;
+            }}
         fetch(`${address}.php?groupId=`+groupId).then(response => response.text())
             .then(response => { document.querySelector("#showGroup").innerHTML = response;})
      
-        }})
-
-           
+        }})        
 // Cuộc hội thoại mới
 document.querySelector("#writePost").addEventListener('click', function () {
         document.querySelector('#footer').style.display = 'none';
+        document.querySelector(".bi-image").addEventListener('click', function () {
+            
+        });
         document.querySelector('#boxInput').style.display = 'flex'; })
-// Nhập cuộc hội thoại mới
+// Viết cuộc hội thoại
 const inputBox = document.getElementById('inputBox');
 inputBox.addEventListener('input', () => {
     if (inputBox.value.length > 100) {
         inputBox.classList.add('long-text');
     } else {
         inputBox.classList.remove('long-text');}});
-// Gửi post 
-document.querySelector(".bi-send").addEventListener('click', function () {
-    var inputBox = document.querySelector("#inputBox").value.trim();
-    var ten_dang_nhap = "<?php echo $ten_dang_nhap; ?>"; 
-    if(inputBox != ""){
-        var post = [];      
-        post.push(groupId);    post.push(ten_dang_nhap);   post.push(inputBox);
-        const json = JSON.stringify(post);
-        fetch('savePost.php', {
-            method: 'POST', 
-            headers: {  'Content-Type': 'application/json' },
-            body: json ,})
-        .then(response => response.text())
-        .then(response => {console.log(response);})
-    }})
+// Gửi ảnh 
+document.querySelector(".bi-image").addEventListener('click', function () {
+    document.getElementById('uploadImages').click();
+})
+// Gửi tệp 
+document.querySelector(".bi-file-earmark-plus").addEventListener('click', function () {
+    document.getElementById('uploadFiles').click();
+})
+// hiển thị ảnh
+    function handleFileSelect(event, type) {
+            files = event.target.files;
+            if (type === 'image') {
+                const imagePreview = document.querySelector('#imagePreview');
+                Array.from(files).forEach(file => {
+                    if (file && (file.type.startsWith('image/') || file.name.endsWith('.gif'))) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const li = document.createElement('li');
+                            li.classList.add("list-inline-item","me-3","position-relative");
+                            const img = document.createElement('img');
+                            img.style.height ="60px";
+                            const randomNumber = Math.floor(Math.random() * 100) + 1;
+                            img.alt = randomNumber;
+                            img.classList.add("img-fluid",);
+                            img.src = e.target.result;
+                            const i = document.createElement('i');
+                            i.classList.add("bi","bi-x-circle","close-icon");
+                            i.style.position = 'absolute';
+                            i.style.top = '0px';
+                            i.style.right = '3px';
+                            i.style.fontSize = '1rem';
+                            i.style.color = 'red';
+                            i.style.cursor = 'pointer';
+                            li.appendChild(img);
+                            li.appendChild(i);
+                            imagePreview.appendChild(li);
+                            document.querySelectorAll('.close-icon').forEach(function(icon) {
+                            icon.addEventListener('click', function() {
+                                this.parentElement.remove();
+                            }); });};
+                        reader.readAsDataURL(file);
+                    } 
+                });} }
+// Gửi bài đăng
+$(document).ready(function() {
+    $('#upload-form').submit(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: 'upload.php',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                if(response != 'Lỗi'){
+                    document.getElementById('post').click();
+                    document.querySelector('#inputBox').value = '';
+                    document.querySelector('#imagePreview').innerHTML  = '';
+                    document.getElementById('uploadImages').value = '';
+                }},
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);}
+        });
+    });
+});
 </script>
 </body>
 </html>

@@ -37,7 +37,8 @@ if (isset($_POST['submit'])) {
                     if ($connect->query($sql2) === TRUE) {
                         // Tên file của người dùng và đường dẫn vào file máy chủ
                         move_uploaded_file($file_tmp, $fileDestination);    
-                    echo '<script language="javascript">alert("Thêm khóa học thành công!);window.location.href = "index.php"</script>';}}  
+                    echo '<script  language="javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                    <script language="javascript"> swal("Tạo nhóm thành công !","","success");setInterval(function() { window.location.href = "index.php"; }, 2004);</script>';}}  
             } else {
                 echo '<script language="javascript">alert("File quá lớn >7MB !");window.location.href = "index.php";</script>';
                 exit();}
@@ -54,5 +55,6 @@ if (isset($_POST['submit'])) {
             $sql2 = "INSERT INTO `thanh_vien_nhom`(`ma_nhom`, `ten_dang_nhap`, `chuc_vu`) 
             VALUES ('$ma_nhom','$nguoi_tao','2')";
             if ($connect->query($sql2) === TRUE) {
-            echo '<script language="javascript">alert("Thêm khóa học thành công!");window.location.href = "index.php"</script>';}}  
+                echo '<script  language="javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script language="javascript"> swal("Tạo nhóm thành công !","","success");setInterval(function() { window.location.href = "index.php"; }, 2004);</script>';}}  
     }}?>

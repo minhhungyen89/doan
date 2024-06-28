@@ -1,0 +1,83 @@
+/* Phần body chính */
+.documents{
+    width: 100%;
+}
+.title-documents {
+    margin-left: 20px;
+    font-size: 200%; 
+    font-style: oblique;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+/**Phần bài viết**/
+.documents-content{
+    width:99%;
+    display:flex;
+    margin-left:10px;
+}
+.content-item-left {
+    width: 50%;
+    display: grid;
+} 
+.content-left{
+    width:100%;
+    display: flex;
+    border: 1px solid grey;
+    margin-bottom: 20px;
+}
+.left-img{
+    width : 35%;
+}
+.content-left >.content{
+    width: 65%;
+    margin-left: 1%;
+    background-color: rgb(235, 235, 235);
+}
+.content >p{
+    margin:2px;
+}
+#img-left{
+    margin:0;
+    width: 100%;
+    height: auto;
+}
+.readmore {
+    color: grey;
+    margin: 10px;
+    padding: 5px;
+    border:none;
+}
+/* Phần body bên trái */
+.content-item-right{
+    width: 50%;
+    margin-left: 10px;
+    display: flex;
+}
+.content-right{
+    width:50%;
+    display: grid;
+    margin-bottom: 20px;
+    justify-items: center;
+}
+.content-right >.content{
+    width: 90%;
+    background-color: rgb(235, 235, 235);
+    border-bottom: 1px solid grey;
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}
+.right-img{
+    width:90%;
+    border-top: 1px solid grey;
+    border-right: 1px solid grey;
+    border-left: 1px solid grey;
+}
+#right-img{
+    width:90%;
+    height:auto;
+}
+.truncate-div {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Số dòng tối đa */
+    overflow: hidden;
+  }

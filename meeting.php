@@ -61,7 +61,7 @@ if(isset($_SESSION['ten_dang_nhap'])){
             </div>
             
         </div>
-<div class="d-flex justify-content-end">
+<!-- <div class="d-flex justify-content-end">
     <div class="p-1 border" style="width:50px;"><i class="bi bi-mic"></i></div>
     <div class="p-1 border" style="width:50px;"><i class="bi bi-camera-video"></i></div>
     <div class="p-1 border" style="width:50px;"> <i class="bi bi-arrow-up-square"></i></div>
@@ -94,7 +94,7 @@ if(isset($_SESSION['ten_dang_nhap'])){
   <div class="col-sm-3 border">.col-sm-3</div>
   <div class="col-sm-3 border">.col-sm-3</div>
 </div>
-<div> 
+<div>  -->
 </body>
 <script>   const userId = <?php echo json_encode($ten_dang_nhap); ?>; </script>
 <script src="api.js"></script>

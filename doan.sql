@@ -44,16 +44,17 @@ CREATE TABLE post (
     ma_nhom INT NOT NULL,
     nguoi_dang VARCHAR(50) NOT NULL,
     gio_dang TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    urlImage VARCHAR(50) , 
+    content TEXT,
     FOREIGN KEY (nguoi_dang) REFERENCES nguoi_dung(ten_dang_nhap),
     FOREIGN KEY (ma_nhom) REFERENCES nhom(ma_nhom)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE content (
-    id_content INT AUTO_INCREMENT PRIMARY KEY,
-    id_post  INT  NOT NULL,
-    loai_hinh VARCHAR(30) NOT NULL,  --  tiêu đề, nội dung, hình ảnh, tệp
-    content TEXT NOT NULL,
-    FOREIGN KEY (id_post) REFERENCES post(id_post)
-) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- CREATE TABLE content (
+--     id_content INT AUTO_INCREMENT PRIMARY KEY,
+--     id_post  INT  NOT NULL,
+   
+--     FOREIGN KEY (id_post) REFERENCES post(id_post)
+-- ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
  
 
