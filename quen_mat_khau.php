@@ -14,11 +14,11 @@
         $mail->CharSet  = "utf-8";
         $mail->Host = 'smtp.gmail.com';  //SMTP servers     sandbox.smtp.mailtrap.io
         $mail->SMTPAuth = true; // Enable authentication
-        $mail->Username = 'pbskidshumg@gmail.com'; // SMTP username    9262747ab63cf0
+        $mail->Username = 'email của bạn'; // SMTP username    9262747ab63cf0
         $mail->Password = 'sbay ybol wgnn meuj';   // SMTP password     c6bdaa17a54e8b
         $mail->SMTPSecure = 'ssl';  // encryption TLS/SSL    TLS
         $mail->Port = 465;  // port to connect to                
-        $mail->setFrom('pbskidhumg@gmail.com', 'PBSKIDS' ); 
+        $mail->setFrom('email của bạn', 'PBSKIDS' ); 
         $mail->addAddress($emailQMK); 
         $mail->isHTML(true);  // Set email format to HTML
         $mail->Subject = 'Thư mã xác nhận';
